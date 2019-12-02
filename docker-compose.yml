@@ -1,0 +1,33 @@
+version: "3.2"
+services:
+    # Jenkins with needed plugins
+    jenkins:
+      build: .
+      container_name: jenkins
+      # links:
+      #   - db
+      ports:
+      # - "80:80"
+      - "8087:8080"
+      - "50000:50000"
+      labels:
+        - traefik.backend=jenkins
+        - traefik.docker.network=traefik_webgateway
+        - "traefik.frontend.rule=Host:jenkins.localhost"
+        - traefik.port=80
+      #map host folders (relative to this file) to service
+      volumes:
+        - ./jenkins_home:/var/jenkins_home
+      #mark the db services as a dependency
+      # depends_on:
+      #   - db
+      restart:
+        always
+      networks:
+        - traefik_webgateway 
+        - internal
+networks:
+  traefik_webgateway:
+    external: true
+  internal:
+    external: true

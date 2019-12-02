@@ -1,0 +1,5 @@
+[http]
+	sslVerify = false
+[filesystem "Oracle Corporation|1.8.0_232|//10.0.75.1/C"]
+	timestampResolution = 1001 microseconds
+	minRacyThreshold = 9507 microseconds

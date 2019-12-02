@@ -1,0 +1,10 @@
+Started on Dec 2, 2019 1:52:59 PM
+Using strategy: Default
+using credential 4674072b-dbd9-4de3-afbb-60b878286dd3
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git ls-remote -h -- https://bitbucket.niehs.nih.gov/scm/ntpcus/pathology-slide-review.git # timeout=10
+Found 68 remote heads on https://bitbucket.niehs.nih.gov/scm/ntpcus/pathology-slide-review.git
+[poll] Latest remote head revision on refs/heads/develop is: 79004c857f60648357b4a9d2b24d69b0a352157d
+Done. Took 0.78 sec
+Changes found

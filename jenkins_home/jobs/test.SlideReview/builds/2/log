@@ -1,0 +1,19 @@
+Started by an SCM change
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/Test
+using credential 4674072b-dbd9-4de3-afbb-60b878286dd3
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.Slide_Review.url https://bitbucket.niehs.nih.gov/scm/ntpcus/pathology-slide-review.git # timeout=10
+Fetching upstream changes from https://bitbucket.niehs.nih.gov/scm/ntpcus/pathology-slide-review.git
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress -- https://bitbucket.niehs.nih.gov/scm/ntpcus/pathology-slide-review.git +refs/heads/*:refs/remotes/Slide_Review/* # timeout=10
+ > git rev-parse refs/remotes/Slide_Review/develop^{commit} # timeout=10
+ > git rev-parse refs/remotes/Slide_Review/Slide_Review/develop^{commit} # timeout=10
+Checking out Revision 79004c857f60648357b4a9d2b24d69b0a352157d (refs/remotes/Slide_Review/develop)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 79004c857f60648357b4a9d2b24d69b0a352157d # timeout=10
+Commit message: "Merge pull request #101 in NTPCUS/pathology-slide-review from feature/update-precommit-psr2 to develop"
+First time build. Skipping changelog.
+Finished: SUCCESS
