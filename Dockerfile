@@ -11,16 +11,17 @@ USER root
 RUN apt-get update && apt-get install -y \
     php7.0 \
     php7.0-cli \
+    php7.0-mbstring \
     libapache2-mod-php
 
 # install php unit
-RUN  wget phpunit https://phar.phpunit.de/phpunit-6.phar
-RUN chmod +x phpunit-6.phar
-RUN ./phpunit-6.phar --version
+RUN  wget https://phar.phpunit.de/phpunit-6.phar -O phpunit
+RUN chmod +x phpunit
+RUN ./phpunit --version
 
 #install phpstan
-RUN wget https://github.com/phpstan/phpstan/releases/download/0.11.19/phpstan.phar -O bin/phpstan.phar
-RUN chmod +x /bin/phpstan.phar
+RUN wget https://github.com/phpstan/phpstan/releases/download/0.9.2/phpstan.phar -O phpstan
+RUN chmod +x phpstan
 
 # switch back to standard user
 USER jenkins

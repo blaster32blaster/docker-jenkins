@@ -69,6 +69,7 @@ pipeline-stage-view:2.12
 plain-credentials:1.5
 plot:2.1.3
 pmd:4.0.0
+prometheus:2.0.6
 publish-over:0.22
 publish-over-ssh:1.20.1
 resource-disposer:0.14

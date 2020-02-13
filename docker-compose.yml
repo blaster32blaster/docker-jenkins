@@ -26,74 +26,74 @@ services:
       networks:
         - traefik_webgateway 
         - internal
-    jenkins-prometh: # This container is for harvesting metrics
-        image: prom/prometheus:v2.1.0 # metric package
-        command:
-          - '--config.file=/etc/prometheus/prometheus.yml'
-          - '--storage.tsdb.path=/prometheus'
-          - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-          - '--web.console.templates=/usr/share/prometheus/consoles'
-        volumes:
-          - ./dock-files/prometheus/:/etc/prometheus/
-          - prometheus_data:/prometheus
-        labels:
-          - "traefik.enable=true"
-          - "traefik.http.routers.prometh.rule=Host(`jenkins-pro.docker.localhost`)"
-          - "traefik.http.routers.prometh.entrypoints=web"
-        networks:
-          - traefik_webgateway
-          - internal
-        restart:
-          always
-        stdin_open:
-          true
-        tty:
-          true
-    jenkins-grafana: # this gives us fancy dashboards etc ...
-        image: grafana/grafana
-        depends_on:
-          - jenkins-prometh
-        volumes:
-          - grafana_data:/var/lib/grafana
-          - ./dock-files/grafana/provisioning/:/etc/grafana/provisioning/
-        env_file:
-          - ./dock-files/grafana/config.monitoring
-        networks:
-          - traefik_webgateway
-          - internal
-        user: "104"
-        labels:
-          - "traefik.enable=true"
-          - "traefik.http.routers.grafana.rule=Host(`jenkins-grafana.localhost`)"
-          - "traefik.http.routers.grafana.entrypoints=web"
-        restart:
-          always
-    jenkins-sonarqube:
-        image: sonarqube
-        ports:
-          - "9000:9000"
-        networks:
-          - internal
-        environment:
-          - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
-          - SONARQUBE_JDBC_USERNAME=sonar
-          - SONARQUBE_JDBC_PASSWORD=sonar
-        volumes:
-          - sonarqube_conf:/opt/sonarqube/conf
-          - sonarqube_data:/opt/sonarqube/data
-          - sonarqube_extensions:/opt/sonarqube/extensions
-          - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
-    jenkins-postgres: # this is to integrate with sonarqube
-        image: postgres:9.6.16
-        networks:
-          - internal
-        environment:
-          - POSTGRES_USER=sonar
-          - POSTGRES_PASSWORD=sonar
-        volumes:
-          - postgresql:/var/lib/postgresql
-          # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
-          - postgresql_data:/var/lib/postgresql/data
+#    jenkins-prometh: # This container is for harvesting metrics
+#        image: prom/prometheus:v2.1.0 # metric package
+#        command:
+#          - '--config.file=/etc/prometheus/prometheus.yml'
+#          - '--storage.tsdb.path=/prometheus'
+#          - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+#          - '--web.console.templates=/usr/share/prometheus/consoles'
+#        volumes:
+#          - ./dock-files/prometheus/:/etc/prometheus/
+#          - prometheus_data:/prometheus
+#        labels:
+#          - "traefik.enable=true"
+#          - "traefik.http.routers.prometh.rule=Host(`jenkins-pro.docker.localhost`)"
+#          - "traefik.http.routers.prometh.entrypoints=web"
+#        networks:
+#          - traefik_webgateway
+#          - internal
+#        restart:
+#          always
+#        stdin_open:
+#          true
+#        tty:
+#          true
+#    jenkins-grafana: # this gives us fancy dashboards etc ...
+#        image: grafana/grafana
+#        depends_on:
+#          - jenkins-prometh
+#        volumes:
+#          - grafana_data:/var/lib/grafana
+#          - ./dock-files/grafana/provisioning/:/etc/grafana/provisioning/
+#        env_file:
+#          - ./dock-files/grafana/config.monitoring
+#        networks:
+#          - traefik_webgateway
+#          - internal
+#        user: "104"
+#        labels:
+#          - "traefik.enable=true"
+#          - "traefik.http.routers.grafana.rule=Host(`jenkins-grafana.localhost`)"
+#          - "traefik.http.routers.grafana.entrypoints=web"
+#        restart:
+#          always
+#    jenkins-sonarqube:
+#        image: sonarqube
+#        ports:
+#          - "9000:9000"
+#        networks:
+#          - internal
+#        environment:
+#          - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+#          - SONARQUBE_JDBC_USERNAME=sonar
+#          - SONARQUBE_JDBC_PASSWORD=sonar
+#        volumes:
+#          - sonarqube_conf:/opt/sonarqube/conf
+#          - sonarqube_data:/opt/sonarqube/data
+#          - sonarqube_extensions:/opt/sonarqube/extensions
+#          - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+#    jenkins-postgres: # this is to integrate with sonarqube
+#        image: postgres:9.6.16
+#        networks:
+#          - internal
+#        environment:
+#          - POSTGRES_USER=sonar
+#          - POSTGRES_PASSWORD=sonar
+#        volumes:
+#          - postgresql:/var/lib/postgresql
+#          # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
+#          - postgresql_data:/var/lib/postgresql/data
 networks:
   traefik_webgateway:
     external: true
